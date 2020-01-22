@@ -57,20 +57,10 @@ img {
     width: 6%;
 }
 
-ul li:not(:first-child) {
-    padding: 3rem;
-    background: #DBDBDB;
-    width: 100%;
-    font-size: 2rem;
-    color: #0f0f0f;
-
-}
 
 
 
-ul li:not(:first-child):hover {
-    background-color: #D1D1D1;
-}
+
 
 @media (min-width: 750px) {
     ul li:not(:first-child) {
