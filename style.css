@@ -53,16 +53,8 @@ button {
 }
 
 #output {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   padding: 12px;
-}
-
-#loader {
-  display: none;
 }
 
 .cards {
@@ -92,6 +84,24 @@ button {
   /* margin: 0; */
 }
 
+#loader {
+  display: none;
+  color: #fff000;
+  text-align: center;
+  animation: blinking alternate 1s infinite;
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 #error {
   color: #fff000;
   text-align: center;
@@ -99,11 +109,8 @@ button {
 
 .footer {
   color: #fff000;
-  /* position: absolute; */
-  bottom: 0;
-  right: 0;
-  left: 0;
   text-align: center;
+  margin-top: 4rem;
 }
 
 .footer h5 {

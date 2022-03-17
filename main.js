@@ -3,6 +3,7 @@ const app = (function () {
   const loader = document.querySelector("#loader");
   const display = (movies) => {
     loader.style.display = "none";
+    loader.style.display = "none";
     if (movies === undefined || movies.length === 0) {
       Snackbar.show({
         text: "No movies found",
@@ -40,6 +41,7 @@ const app = (function () {
   };
 
   const requestMovies = (moviesInput) => {
+    loader.style.display = "block";
     const url = `https://www.omdbapi.com/?s=${moviesInput}&apikey=${key}`;
     axios
       .get(url)
@@ -72,7 +74,6 @@ const app = (function () {
 // Heading
 const header = document.querySelector("h1");
 const headerTitle = ["Vanilla ", "JavaScript", "Movie App"];
-
 header.innerHTML = headerTitle
   .map((title, index) => {
     return `<span class="header-title" id="header-title-${index}">${title}</span>`;
@@ -98,5 +99,6 @@ document.addEventListener("click", async function (e) {
     e.target.disabled = true;
     e.target.innerHTML = "Searching...";
     app.requestMovies(input);
+    document.querySelector("#search-input").value = "";
   }
 });
