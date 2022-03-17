@@ -118,6 +118,6 @@ button {
   margin: 0;
 }
 
-a {
+a[href] {
   color: #fff000;
 }
