@@ -1,52 +1,102 @@
-const key = "e109d342";
-
-const display = movies => {
-  let displayMovies = movies.map((movie, index) => {
-    const { Title, Year, imdbID, Type, Poster } = movie;
-    return `
-    
-      <div class="three columns card" >
-      <h6> <code> ${Title} </code> </h6>
-       <img src="${Poster}"/> 
-        
-         <h6> <code> ${Year} </code> </h6>
-      </div>
-      
-`;
-  });
-  const mainOutput = document.getElementById("output");
-  mainOutput.innerHTML = displayMovies.join("");
-};
-
-const requestMovies = async moviesInput => {
-  const url = `https://www.omdbapi.com/?s=${moviesInput}&apikey=${key}`;
-  let output;
-  try {
-    const response = await axios.get(url);
-    let movies = response.data.Search;
-    display(movies);
-    let loader = document.getElementById("loader");
+const app = (function () {
+  const key = "e109d342";
+  const loader = document.querySelector("#loader");
+  const display = (movies) => {
     loader.style.display = "none";
-  } catch (err) {
-    console.error(err);
-  }
-};
+    if (movies === undefined || movies.length === 0) {
+      Snackbar.show({
+        text: "No movies found",
+        pos: "bottom-center",
+        actionTextColor: "#fff",
+        backgroundColor: "#f44336",
+        duration: 3000,
+      });
+      document.querySelector(
+        "#output"
+      ).innerHTML = `<h1 id="error">No movies found</h2>`;
+      document.querySelector("button").disabled = false;
+      document.querySelector("button").innerHTML = "Search";
+    } else {
+      loader.style.display = "none";
+      let displayMovies = movies.map((movie, index) => {
+        const { Title, Year, imdbID, Type, Poster } = movie;
+        return `
+      <div class="card" >
+      <h6>  ${Title} </h6>
+       <img src=${
+         Poster === "N/A"
+           ? "https://via.placeholder.com/450.png/09f/fff"
+           : Poster
+       } alt="Movie Poster"/> 
+         <h6> ${Year}  </h6>
+      </div> 
+`;
+      });
+      const mainOutput = document.querySelector(".cards");
+      if (mainOutput !== null) mainOutput.innerHTML = displayMovies.join(" ");
+      document.querySelector("button").disabled = false;
+      document.querySelector("button").innerHTML = "Search";
+    }
+  };
 
-document.addEventListener("click", function(e) {
-  if (!e.target.matches("#btn")) {
+  const requestMovies = (moviesInput) => {
+    const url = `https://www.omdbapi.com/?s=${moviesInput}&apikey=${key}`;
+    axios
+      .get(url)
+      .then((response) => {
+        if (response) {
+          display(response.data.Search);
+        } else {
+          display([]);
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          console.log(error);
+          Snackbar.show({
+            text: error,
+            pos: "bottom-center",
+            actionTextColor: "#fff",
+            backgroundColor: "#f44336",
+            duration: 3000,
+          });
+        }
+      });
+  };
+
+  return {
+    requestMovies: (input) => requestMovies(input),
+  };
+})();
+
+// Heading
+const header = document.querySelector("h1");
+const headerTitle = ["Vanilla ", "JavaScript", "Movie App"];
+
+header.innerHTML = headerTitle
+  .map((title, index) => {
+    return `<span class="header-title" id="header-title-${index}">${title}</span>`;
+  })
+  .join(" ");
+
+// implmentation of the search bar
+document.addEventListener("click", async function (e) {
+  if (!e.target.matches("button")) {
     return false;
   }
-  let searchInput = document.getElementById("search-input").value;
-  if (searchInput === "") {
-    let errMsg = document.getElementById("errorMsg");
-    errMsg.textContent = "Please provide an input";
-    errMsg.style.display = "block";
-    setTimeout(() => {
-      errMsg.style.display = "none";
-    }, 1000);
-    // console.log("Please provide an input");
-    return false;
+  const input = document.querySelector("#search-input").value;
+
+  if (!input) {
+    Snackbar.show({
+      text: "Please enter a movie name",
+      pos: "bottom-center",
+      actionTextColor: "#fff",
+      backgroundColor: "#f44336",
+      duration: 3000,
+    });
   } else {
-    requestMovies(searchInput);
+    e.target.disabled = true;
+    e.target.innerHTML = "Searching...";
+    app.requestMovies(input);
   }
 });

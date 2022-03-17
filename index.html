@@ -4,22 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.css"
+      integrity="sha512-mMqvQEYxSHpo1H5EeRLrfMxwcRH8DKeZWchEYj6QX7Lu9xngntPbcXXrQ7Ls2gEsyNlh1UwT+thZUcSIpG45Wg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-
-    <link rel="stylesheet" href="style.css" />
-
     <title>Movie APP</title>
   </head>
   <body>
-    <h1>Movie App</h1>
+    <h1></h1>
     <div class="container">
       <div class="row">
-        <div class="twelve columns input-area">
-          <span id="errorMsg"></span>
-
+        <div class="input-area">
           <input
             class="u-full-width"
             id="search-input"
@@ -29,23 +28,29 @@
           <button class="button u-full-width" id="btn">Search</button>
         </div>
       </div>
-      <hr />
 
       <div id="output">
         <img src="loading.gif" alt="" id="loader" />
+        <div class="cards"></div>
       </div>
     </div>
 
     <div class="footer">
       <div class="container">
         <div class="row">
-          <div class=" twelve column">
+          <div class="twelve column">
             <h5>Made with ❤ by <code>Isiaka Lukman Bamidele</code></h5>
           </div>
         </div>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"
+      integrity="sha512-iILlngu0qmiyIkOH6MV1RWSya+DL2uzo0cb/nKR4hqwz9H+Xnop1++f8TMw1j5CdbutXGkBUyfRUfg/hmNBfZg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="main.js"></script>
   </body>
 </html>
